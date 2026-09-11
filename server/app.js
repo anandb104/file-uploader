@@ -15,6 +15,8 @@ const { prisma } = require("./lib/prisma.js");
 require("./passport.js");
 let passport=require("passport");
 const loginrouter = require("./router/loginroute.js");
+const logoutrouter = require("./router/logoutroute.js");
+
 app.use(session({
     store: new PrismaSessionStore(prisma, {
         checkPeriod: 2 * 60 * 1000
@@ -30,6 +32,7 @@ app.use(passport.initialize());
 app.use(passport.session());
 app.use("/signup",signuprouter);
 app.use("/login",loginrouter);
+app.use("/logout",logoutrouter);
 let port=3000|process.env.PORT
 app.listen(port,(error)=>{
     if(error){

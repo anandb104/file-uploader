@@ -25,6 +25,6 @@ passport.serializeUser((user,done)=>{
     return done(null,user.id);
 })
 passport.deserializeUser(async(id,done)=>{
-    let user=await finduserdb(id);
+    let user=await query.finduserdb(id);
     return done(null,user);
 })
