@@ -14,7 +14,9 @@ datasource db {
 
 model User {
   id      String   @id @default(uuid())
-  name    String
+  fullname String
+  username   String @unique
+  password   String
   folders Folder[]
   files   File[]
 }
@@ -31,6 +33,7 @@ model Folder {
 model File {
   id       String  @id @default(uuid())
   name     String
+  created DateTime @default(now())
   user     User    @relation(fields: [userId], references: [id])
   userId   String
   folder   Folder? @relation(fields: [folderId], references: [id])
