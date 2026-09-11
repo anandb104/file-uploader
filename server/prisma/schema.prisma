@@ -39,3 +39,10 @@ model File {
   folder   Folder? @relation(fields: [folderId], references: [id])
   folderId String
 }
+
+model Session{
+  sid String @id
+  sess Json
+  expire DateTime
+  @@index([expire])
+}
