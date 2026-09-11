@@ -10,12 +10,14 @@ app.use(cors({
     credentials:true
 }));
 let session=require("express-session");
-let pgsession=require("connect-pg-simple")(session);
+const { PrismaSessionStore } = require("@quixo3/prisma-session-store");
+const { prisma } = require("./lib/prisma.js");
 require("./passport.js");
 let passport=require("passport");
+const loginrouter = require("./router/loginroute.js");
 app.use(session({
-    store:new pgsession({
-        conString:process.env.DATABASE_URL
+    store: new PrismaSessionStore(prisma, {
+        checkPeriod: 2 * 60 * 1000
     }),
     resave:false,
     saveUninitialized:false,
@@ -27,6 +29,7 @@ app.use(session({
 app.use(passport.initialize());
 app.use(passport.session());
 app.use("/signup",signuprouter);
+app.use("/login",loginrouter);
 let port=3000|process.env.PORT
 app.listen(port,(error)=>{
     if(error){
