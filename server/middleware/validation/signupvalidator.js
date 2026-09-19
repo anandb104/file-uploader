@@ -14,14 +14,14 @@ body("username")
 body("password")
 .trim()
 .notEmpty()
-.withMessage("username cant be empty")
+.withMessage("Password cant be empty")
 .isLength({min:8})
 .withMessage("The password should be of 8 characters"),
 
 body("confirmpassword")
 .trim()
 .notEmpty()
-.withMessage("username cant be empty")
+.withMessage("Confirm Password cant be empty")
 .isLength({min:8})
 .withMessage("The password should be of 8 characters")
 .custom((value,{req})=>{

@@ -16,7 +16,7 @@ export function LoginForm({
 }: React.ComponentProps<"div">) {
   return (
     <div className={cn("flex flex-col gap-6", className)} {...props}>
-      <Card className="overflow-hidden p-0 bg-neutral-900 text-white">
+      <Card className="overflow-hidden p-0 bg-neutral-900 font-[IM_Fell_DW_Pica_SC] text-white">
         <CardContent className="grid p-0 md:grid-cols-2">
           <form className="p-6 md:p-8">
             <FieldGroup>

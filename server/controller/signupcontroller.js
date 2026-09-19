@@ -25,7 +25,7 @@ let user=await query.createuserdb(fullname,username,hashedpassword);
 req.login(user,(error)=>{
     if(error){
         res.status(402).json({
-            message:"Something Went Wrong"
+            message:"Something Went Wrong during login"
         })
     }
 })
