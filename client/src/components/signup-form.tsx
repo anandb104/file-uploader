@@ -44,7 +44,6 @@ export function SignupForm({
       body:JSON.stringify(data)
     })
     const form=await response.json();
-    console.log(form);
     if(!response.ok){
       if(form.message)
      toast.error(form.message,{ position: "bottom-center"});
