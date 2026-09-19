@@ -7,7 +7,6 @@ import {
   FieldDescription,
   FieldGroup,
   FieldLabel,
-  FieldSeparator,
 } from "@/components/ui/field"
 import { Input } from "@/components/ui/input"
 
@@ -69,7 +68,7 @@ export function SignupForm({
                 <Button type="submit" className="bg-yellow-500">Create Account</Button>
               </Field>
               <FieldDescription className="text-center">
-                Already have an account? <Link to="login">Sign in</Link>
+                Already have an account? <Link to="/login" className="text-white hover:!text-yellow-500">Sign in</Link>
               </FieldDescription>
             </FieldGroup>
           </form>
