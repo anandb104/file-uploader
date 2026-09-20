@@ -4,7 +4,7 @@ logoutrouter.post("/",(req,res)=>{
     req.logout((error)=>{
         if(error){
             res.status(404).json({
-                error:error.message
+                message:error.message
             })
         }
         else{

@@ -5,6 +5,9 @@ import App from './App.tsx'
 import { createBrowserRouter,RouterProvider } from 'react-router'
 import Signup from "./components/Signup.tsx";
 import Login from "./components/Login.tsx";
+import Folder from "./components/Folder.tsx";
+import File from "./components/File.tsx";
+import Folderfile from "./components/Folderfile.tsx";
 import Dashboard from "./components/Dashboard.tsx";
 import { Toaster } from "@/components/ui/sonner"
 function Main(){
@@ -14,7 +17,13 @@ const router=createBrowserRouter(
   children:[
     {path:"/",element:<Signup/>},
     {path:"login",element:<Login/>},
-    {path:"dashboard",element:<Dashboard/>},
+  ]
+ },
+ {path:"/dashboard",element:<Dashboard/>,
+  children:[
+    {path:"folder/:id",element:<Folder/>},
+    {path:"file/:id",element:<File/>},
+    {path:"/dashboard",element:<Folderfile/>}
   ]
  }
  ]

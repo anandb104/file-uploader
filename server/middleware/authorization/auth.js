@@ -6,7 +6,7 @@ async function authorization(req,res){
     }
     else{
      res.status(200).json({
-     user:req.user
+     username:req.user.username
      })
     }
 }
