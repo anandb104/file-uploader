@@ -22,6 +22,8 @@ type filetype={
     filename:string
 }
 import {File,Folder} from "lucide-react";
+import buttonbg from "../assets/bg-btn.jpg"
+
 import {Link, useOutletContext} from "react-router";
 export default function Folderfile(){
     const {folders,fileadded}=useOutletContext<{folders:foldertype[],fileadded:File|null}>()
@@ -45,7 +47,7 @@ export default function Folderfile(){
                 {folders.map((folder)=>{
                     return(
                         <Link to={`/dashboard/folder/${folder.id}`} key={folder.id}>
-        <Card className="h-50 w-50">
+        <Card className="h-50 w-50" style={{backgroundImage:`url(${buttonbg})`}}>
         <CardContent className="justify-center items-center">
         <Folder className="h-30 w-50"/>
          </CardContent>
@@ -64,7 +66,7 @@ export default function Folderfile(){
                 {files.map((file)=>{
                     return(
                         <Link to={`/dashboard/file/${file.id}`} key={file.id}>
-        <Card className="h-50 w-70 flex justify-center">
+        <Card className="h-50 w-70 flex justify-center" style={{backgroundImage:`url(${buttonbg})`}}>
         <CardContent className="justify-center items-center">
         <File className="h-30 w-50"/>
          </CardContent>

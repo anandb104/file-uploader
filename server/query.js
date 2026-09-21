@@ -123,6 +123,15 @@ async function uploadfilewithoutfolderdb(originalname,mimetype,filename,path,siz
         })
         return folder;
     }
+    async function getfiledb(userid,fileid){
+        let file=prisma.file.findFirst({
+            where:{
+                userId:userid,
+                id:fileid
+            }
+        })
+        return file
+    }
 module.exports={
 checkusernamedb,
 finduserdb,
@@ -135,4 +144,5 @@ uploadfilewithoutfolderdb,
 getfoldersdashboarddb,
 getfilesdashboarddb,
 getfolderdb,
+getfiledb,
 }

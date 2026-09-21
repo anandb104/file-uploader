@@ -1,8 +1,6 @@
 let query=require("../query");
+let path=require("path");
 async function uploadfile(req,res){
-    console.log("FILE:", req.file);
-    console.log("BODY:", req.body);
-    console.log("FOLDER ID:", req.body.folderid);
     try{
         if(!req.file){
             res.status(404).json({
@@ -34,6 +32,34 @@ file:file
      })
     }
 }
+async function getfile(req,res){
+    let fileid=req.params.id;
+     try{
+      let file=await query.getfiledb(req.user.id,fileid);
+      res.status(200).json({
+        file:file
+      })
+     }
+     catch(error){
+        res.status(404).json({
+            message:error.message
+        })
+     }
+}
+async function downloadfile(req,res){
+    try{
+    let fileid=req.params.id;
+    let file=await query.getfiledb(req.user.id,fileid);
+      res.download(path.resolve(file.path),file.name);
+    }
+    catch(error){
+        res.status(404).json({
+         message:error.message
+        })
+    }
+}
 module.exports={
     uploadfile,
+    getfile,
+    downloadfile
 }

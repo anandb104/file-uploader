@@ -14,6 +14,7 @@ import {
     CardContent,
     CardFooter,
   } from "@/components/ui/card"
+  import buttonbg from "../assets/bg-btn.jpg"
   import {File} from "lucide-react";
 import { useEffect } from "react";
 import {Link} from "react-router";
@@ -41,9 +42,9 @@ export default function Folder(){
                 {files.map((file)=>{
                     return(
                         <Link to={`/dashboard/file/${file.id}`} key={file.id}>
-        <Card className="h-50 w-70 flex justify-center">
+        <Card className="h-70 w-70 flex justify-center" style={{backgroundImage:`url(${buttonbg})`}}>
         <CardContent className="justify-center items-center">
-        <File className="h-30 w-50"/>
+        <File className="h-40 w-50"/>
          </CardContent>
         <CardFooter className="flex justify-center items-center font-[IM_Fell_DW_Pica_SC] text-xl">
         <p>{file.name}</p>
