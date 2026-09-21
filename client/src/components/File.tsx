@@ -41,7 +41,9 @@ export default function File(){
     const url=window.URL.createObjectURL(blob);
     const a=document.createElement("a");
     a.href=url;
-    a.download=files?.name;
+    if (files) {
+        a.download = files.name;
+    }
     a.click();
     window.URL.revokeObjectURL(url);
     }
