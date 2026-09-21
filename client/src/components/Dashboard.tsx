@@ -112,7 +112,7 @@ export default function Dashboard(){
           <FieldGroup>
             <Field>
               <Label htmlFor="name-1">Upload File</Label>
-              <Input id="name-1" name="file" type="file" placeholder="Enter Your File"  onChange={(e)=>setfile(e.target.files[0])} />
+              <Input id="name-1" name="file" type="file" placeholder="Enter Your File"  onChange={(e)=>setfile(e.target.files?.[0])} />
             </Field>
             <Field>
             <Label >Folders</Label>

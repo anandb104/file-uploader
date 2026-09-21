@@ -48,7 +48,7 @@ export function SignupForm({
       if(form.message)
      toast.error(form.message,{ position: "bottom-center"});
     else if(form.errors){
-      form.errors.forEach((error) => {
+      form.errors.forEach((error: any) => {
         toast.error(error.msg,{ position: "bottom-center"})
       });
     }
