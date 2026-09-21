@@ -1,5 +1,8 @@
 let query=require("../query");
 async function uploadfile(req,res){
+    console.log("FILE:", req.file);
+    console.log("BODY:", req.body);
+    console.log("FOLDER ID:", req.body.folderid);
     try{
         if(!req.file){
             res.status(404).json({
@@ -27,7 +30,7 @@ file:file
     }
     catch(error){
      res.status(404).json({
-        message:error.msg
+        message:error.message
      })
     }
 }

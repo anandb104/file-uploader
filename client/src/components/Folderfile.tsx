@@ -24,20 +24,18 @@ type filetype={
 import {File,Folder} from "lucide-react";
 import {Link, useOutletContext} from "react-router";
 export default function Folderfile(){
-    const {folderadded,fileadded}=useOutletContext<{folderadded:number,fileadded:File|null}>()
-    const [folders,setfolders]=useState<foldertype[]>([]);
+    const {folders,fileadded}=useOutletContext<{folders:foldertype[],fileadded:File|null}>()
     const [files,setfiles]=useState<filetype[]>([]);
    async function getfoldersfiles(){
     const response=await fetch(`${import.meta.env.VITE_API_URL}/dashboard`,{
         credentials:"include"
     })
     const data=await response.json();
-    setfolders(data.folders);
     setfiles(data.files);
    }
    useEffect(()=>{
     getfoldersfiles();
-   },[folderadded,fileadded])
+   },[fileadded])
     return(
         <div className="bg-neutral-900 h-200 w-375 flex flex-col items-center gap-5 text-white overflow-y-scroll">
            

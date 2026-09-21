@@ -15,14 +15,34 @@ import {
  import { toast } from "sonner"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
-
-
+type foldertype={
+    id:string,
+    name:string,
+    created:Date,
+    userid:string
+}
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select"
 export default function Dashboard(){
+ const [folders,setfolders]=useState<foldertype[]>([]);
     const[user,setuser]=useState("");
     const [foldername,setfoldername]=useState<string>("");
-    const [folderadded,setfolderadded]=useState(0);
     const [file,setfile]=useState<File|null>(null);
     const [fileadded,setfileadded]=useState(0);
+    const [folderid,setfolderid]=useState("");
+    async function getfolders(){
+        const response=await fetch(`${import.meta.env.VITE_API_URL}/dashboard`,{
+            credentials:"include"
+        })
+        const data=await response.json();
+        setfolders(data.folders);
+       }
     async function handlefoldersubmit(){
      const response=await fetch(`${import.meta.env.VITE_API_URL}/folder`,{
         method:"POST",
@@ -41,11 +61,18 @@ export default function Dashboard(){
      }
      toast.success(data.message,{position:"bottom-right"});
      setfoldername("");
-     setfolderadded((prev)=>prev+1);
+     getfolders();
     }
+    useEffect(()=>{
+        getfolders();
+    },[])
     async function handlefilesubmit(){
+        if(!file)return;
         const formdata=new FormData();
         formdata.append("file",file);
+        if(folderid!="none"){
+            formdata.append("folderid",folderid);
+        }
         const response=await fetch(`${import.meta.env.VITE_API_URL}/file/upload`,{
            method:"POST",
            credentials:"include",
@@ -87,6 +114,26 @@ export default function Dashboard(){
               <Label htmlFor="name-1">Upload File</Label>
               <Input id="name-1" name="file" type="file" placeholder="Enter Your File"  onChange={(e)=>setfile(e.target.files[0])} />
             </Field>
+            <Field>
+            <Label >Folders</Label>
+            <Select value={folderid} onValueChange={setfolderid} >
+      <SelectTrigger className="w-full max-w-48">
+        <SelectValue placeholder="Select A Folder"/>
+      </SelectTrigger>
+      <SelectContent>
+        <SelectGroup>
+          <SelectItem value="none">
+              None
+            </SelectItem>
+          {folders.map((folder) => (
+            <SelectItem key={folder.id} value={folder.id}>
+              {folder.name}
+            </SelectItem>
+          ))}
+        </SelectGroup>
+      </SelectContent>
+    </Select>
+            </Field>
           </FieldGroup>
           <DialogFooter>
            <DialogClose asChild>
@@ -124,7 +171,7 @@ export default function Dashboard(){
     </Dialog>
         </div>
         <div className="bg-black">
-        <Outlet context={{folderadded,fileadded}}/>
+        <Outlet context={{folders,fileadded}}/>
         </div>
         </div>
     )

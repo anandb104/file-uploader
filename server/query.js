@@ -50,7 +50,15 @@ const user=await prisma.user.findFirst({
 })
 return user.folders;
 }
-
+async function checkiffolderexistsdb(folderid,userid){
+    let folder=await prisma.folder.findFirst({
+        where:{
+            id:folderid,
+            userId:userid
+        }
+    })
+    return folder;
+    }
 async function uploadfilewithfolderdb(originalname,mimetype,filename,path,size,userid,folderid){
 let file=await prisma.file.create({
     data:{
@@ -60,7 +68,7 @@ let file=await prisma.file.create({
         size:size,
         path:path,
         filename:filename,
-        folderid:folderid
+        folderId:folderid
     }
 })
 return file;
@@ -74,6 +82,7 @@ async function uploadfilewithoutfolderdb(originalname,mimetype,filename,path,siz
             size:size,
             path:path,
             filename:filename,
+            folderId:null
         }
     })
     return file;
@@ -107,9 +116,11 @@ checkusernamedb,
 finduserdb,
 createuserdb,
 createfolderdb,
+checkiffolderexistsdb,
 getfoldersdb,
 uploadfilewithfolderdb,
 uploadfilewithoutfolderdb,
 getfoldersdashboarddb,
-getfilesdashboarddb
+getfilesdashboarddb,
+
 }

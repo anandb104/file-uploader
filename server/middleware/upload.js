@@ -4,7 +4,7 @@ let storage=multer.diskStorage({
        return cb(null,"uploads/")
     },
     filename:function(req,file,cb){
-        return cb(null,Date.now()+"-"+file.name);
+        return cb(null,Date.now()+"-"+file.originalname);
     }
 });
 let upload=multer({
