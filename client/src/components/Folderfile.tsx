@@ -1,11 +1,7 @@
 import {
     Card,
-    CardAction,
     CardContent,
-    CardDescription,
     CardFooter,
-    CardHeader,
-    CardTitle,
   } from "@/components/ui/card"
 import { useEffect, useState } from "react"
 type foldertype={
@@ -26,8 +22,9 @@ type filetype={
     filename:string
 }
 import {File,Folder} from "lucide-react";
-import {Link} from "react-router";
+import {Link, useOutletContext} from "react-router";
 export default function Folderfile(){
+    const folderadded=useOutletContext<{folderadded:number}>()
     const [folders,setfolders]=useState<foldertype[]>([]);
     const [files,setfiles]=useState<filetype[]>([]);
    async function getfoldersfiles(){
@@ -40,15 +37,16 @@ export default function Folderfile(){
    }
    useEffect(()=>{
     getfoldersfiles();
-   },[])
+   },[folderadded])
     return(
-        <div className="bg-neutral-900 h-200 w-375 flex flex-col items-center gap-5 text-white">
+        <div className="bg-neutral-900 h-200 w-375 flex flex-col items-center gap-5 text-white overflow-y-scroll">
            
             <section className="flex flex-col gap-10 text-white w-full pl-10">
                 <h2 className="justify-start text-2xl pt-5 font-[IM_Fell_DW_Pica_SC]">Folders</h2>
+                <div className="flex flex-wrap gap-5">
                 {folders.map((folder)=>{
                     return(
-                        <Link to={`/dashboard/folder/${folder.id}`}>
+                        <Link to={`/dashboard/folder/${folder.id}`} key={folder.id}>
         <Card className="h-50 w-50">
         <CardContent className="justify-center items-center">
         <Folder className="h-30 w-30"/>
@@ -60,12 +58,14 @@ export default function Folderfile(){
          </Link>
                 );
 })}
+</div>
          </section>
          <section className="flex flex-col gap-10 text-white w-full pl-10">
          <h2 className="justify-start text-2xl pt-5 font-[IM_Fell_DW_Pica_SC]">Files</h2>
+         <div className="flex flex-wrap gap-5">
                 {files.map((file)=>{
                     return(
-                        <Link to={`/dashboard/file/${file.id}`}>
+                        <Link to={`/dashboard/file/${file.id}`} key={file.id}>
         <Card className="h-50 w-50">
         <CardContent className="justify-center items-center">
         <File className="h-30 w-30"/>
@@ -77,6 +77,7 @@ export default function Folderfile(){
          </Link>
                 );
 })}
+</div>
          </section>
         </div>
     )
