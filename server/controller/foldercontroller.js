@@ -16,7 +16,7 @@ async function createfolder(req,res){
 }
 catch(error){
 return res.status(400).json({
-    message:error.msg
+    message:error.message
 })
 }
 }
@@ -30,12 +30,28 @@ try{
 }
 catch(error){
     return res.status(404).json({
-        message:error.msg
+        message:error.message
     })
 }
+}
+
+async function getfolder(req,res){
+    try{
+     let folderid=req.params.id;
+     let folder=await query.getfolderdb(folderid,req.user.id);
+     res.status(200).json({
+        folder:folder
+     })
+    }
+    catch(error){
+     return res.status(404).json({
+        message:error.message
+     })
+    }
 }
 module.exports={
     createfolder,
     getfolders,
+    getfolder
 
 }
