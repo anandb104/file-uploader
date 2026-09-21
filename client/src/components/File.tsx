@@ -43,7 +43,7 @@ export default function File(){
     a.href=url;
     a.download=files.name;
     a.click();
-    window.URL.revokeObjectURL(blob);
+    window.URL.revokeObjectURL(url);
     }
     useEffect(()=>{
         getfile();
