@@ -17,6 +17,9 @@ let passport=require("passport");
 const loginrouter = require("./router/loginroute.js");
 const logoutrouter = require("./router/logoutroute.js");
 const authrouter=require("./router/authroute.js");
+const folderrouter=require("./router/folderroute.js");
+const filerouter=require("./router/fileroute.js");
+const dashboardrouter=require("./router/dashboardroute.js");
 app.use(session({
     store: new PrismaSessionStore(prisma, {
         checkPeriod: 2 * 60 * 1000
@@ -34,6 +37,9 @@ app.use("/signup",signuprouter);
 app.use("/login",loginrouter);
 app.use("/logout",logoutrouter);
 app.use("/auth",authrouter);
+app.use("/folder",folderrouter);
+app.use("/file",filerouter);
+app.use("/dashboard",dashboardrouter);
 let port=3000|process.env.PORT
 app.listen(port,(error)=>{
     if(error){

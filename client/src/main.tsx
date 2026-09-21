@@ -15,7 +15,7 @@ const router=createBrowserRouter(
  [
  {path:"/",element:<App/>,
   children:[
-    {path:"/",element:<Signup/>},
+    {index:true,element:<Signup/>},
     {path:"login",element:<Login/>},
   ]
  },
@@ -23,7 +23,7 @@ const router=createBrowserRouter(
   children:[
     {path:"folder/:id",element:<Folder/>},
     {path:"file/:id",element:<File/>},
-    {path:"/dashboard",element:<Folderfile/>}
+    {index:true,element:<Folderfile/>}
   ]
  }
  ]

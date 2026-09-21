@@ -34,7 +34,7 @@ return(
         </Link>
         <div className="flex items-center gap-15">
             <div>@{user}</div>
-        <Button className="text-white bg-yellow-300 w-30 text-2xl" onClick={handlelogout}>Log Out</Button>
+        <Button className="text-white bg-yellow-500 w-30 h-10 text-2xl" onClick={handlelogout}>Log Out</Button>
         </div>
     </div>
     
