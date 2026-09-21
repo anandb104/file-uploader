@@ -24,7 +24,7 @@ type filetype={
 import {File,Folder} from "lucide-react";
 import {Link, useOutletContext} from "react-router";
 export default function Folderfile(){
-    const folderadded=useOutletContext<{folderadded:number}>()
+    const {folderadded,fileadded}=useOutletContext<{folderadded:number,fileadded:File|null}>()
     const [folders,setfolders]=useState<foldertype[]>([]);
     const [files,setfiles]=useState<filetype[]>([]);
    async function getfoldersfiles(){
@@ -37,7 +37,7 @@ export default function Folderfile(){
    }
    useEffect(()=>{
     getfoldersfiles();
-   },[folderadded])
+   },[folderadded,fileadded])
     return(
         <div className="bg-neutral-900 h-200 w-375 flex flex-col items-center gap-5 text-white overflow-y-scroll">
            
@@ -49,7 +49,7 @@ export default function Folderfile(){
                         <Link to={`/dashboard/folder/${folder.id}`} key={folder.id}>
         <Card className="h-50 w-50">
         <CardContent className="justify-center items-center">
-        <Folder className="h-30 w-30"/>
+        <Folder className="h-30 w-50"/>
          </CardContent>
         <CardFooter className="flex justify-center items-center font-[IM_Fell_DW_Pica_SC] text-xl">
         <p>{folder.name}</p>
@@ -66,9 +66,9 @@ export default function Folderfile(){
                 {files.map((file)=>{
                     return(
                         <Link to={`/dashboard/file/${file.id}`} key={file.id}>
-        <Card className="h-50 w-50">
+        <Card className="h-50 w-70 flex justify-center">
         <CardContent className="justify-center items-center">
-        <File className="h-30 w-30"/>
+        <File className="h-30 w-50"/>
          </CardContent>
         <CardFooter className="flex justify-center items-center font-[IM_Fell_DW_Pica_SC] text-xl">
         <p>{file.name}</p>

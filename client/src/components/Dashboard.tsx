@@ -21,6 +21,8 @@ export default function Dashboard(){
     const[user,setuser]=useState("");
     const [foldername,setfoldername]=useState<string>("");
     const [folderadded,setfolderadded]=useState(0);
+    const [file,setfile]=useState<File|null>(null);
+    const [fileadded,setfileadded]=useState(0);
     async function handlefoldersubmit(){
      const response=await fetch(`${import.meta.env.VITE_API_URL}/folder`,{
         method:"POST",
@@ -41,6 +43,23 @@ export default function Dashboard(){
      setfoldername("");
      setfolderadded((prev)=>prev+1);
     }
+    async function handlefilesubmit(){
+        const formdata=new FormData();
+        formdata.append("file",file);
+        const response=await fetch(`${import.meta.env.VITE_API_URL}/file/upload`,{
+           method:"POST",
+           credentials:"include",
+           body:formdata
+        })
+        const data=await response.json();
+        if(!response.ok){
+           toast.error(data.message,{position:"bottom-right"});
+           return;
+        }
+        toast.success(data.message,{position:"bottom-right"});
+        setfile(null);
+        setfileadded((prev)=>prev+1);
+       }
     useEffect(()=>{
        async function getuser(){
       const response=await fetch(`${import.meta.env.VITE_API_URL}/auth/me`,{
@@ -55,13 +74,35 @@ export default function Dashboard(){
         <div className="bg-black min-h-screen">
         <Dashboardheader user={user}/>
         <div className="flex gap-10 mb-5 overflow-y-scroll ml-315">
-        <Button className="bg-yellow-500 font-[IM_Fell_DW_Pica_SC]">Upload File</Button>
+        <Dialog>
+       <DialogTrigger asChild>
+       <Button className="bg-yellow-500 font-[IM_Fell_DW_Pica_SC]">Upload File</Button>
+     </DialogTrigger>
+        <DialogContent className="sm:max-w-sm">
+          <DialogHeader>
+            <DialogTitle>Upload File</DialogTitle>
+          </DialogHeader>
+          <FieldGroup>
+            <Field>
+              <Label htmlFor="name-1">Upload File</Label>
+              <Input id="name-1" name="file" type="file" placeholder="Enter Your File"  onChange={(e)=>setfile(e.target.files[0])} />
+            </Field>
+          </FieldGroup>
+          <DialogFooter>
+           <DialogClose asChild>
+           <Button variant="outline">Cancel</Button>
+           </DialogClose>
+            <DialogClose asChild>
+            <Button type="submit" onClick={handlefilesubmit}>Save changes</Button>
+            </DialogClose>
+          </DialogFooter>
+        </DialogContent>
+    </Dialog>
         <Dialog>
        <DialogTrigger asChild>
        <Button className="bg-yellow-500 font-[IM_Fell_DW_Pica_SC]">Add Folder</Button>
      </DialogTrigger>
         <DialogContent className="sm:max-w-sm">
-    
           <DialogHeader>
             <DialogTitle>New Folder</DialogTitle>
           </DialogHeader>
@@ -83,7 +124,7 @@ export default function Dashboard(){
     </Dialog>
         </div>
         <div className="bg-black">
-        <Outlet context={{folderadded}}/>
+        <Outlet context={{folderadded,fileadded}}/>
         </div>
         </div>
     )

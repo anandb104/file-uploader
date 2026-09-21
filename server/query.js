@@ -109,6 +109,7 @@ createuserdb,
 createfolderdb,
 getfoldersdb,
 uploadfilewithfolderdb,
+uploadfilewithoutfolderdb,
 getfoldersdashboarddb,
 getfilesdashboarddb
 }
